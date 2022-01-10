@@ -61,6 +61,8 @@ def boot_django(app: Optional[str] = "") -> None:
 @click.option("-M", "service", flag_value="migrate", help="Migrate")
 @click.option("-s", "service", flag_value="shell", help="Run Django Shell")
 @click.option("-a", "service", flag_value="startapp", help="Create Application")
+@click.option("-b", "service", flag_value="build", help="Build Application")
+@click.option("-pp", "service", flag_value="pypi", help="Upload to Pypi")
 @click.option(
     "-n",
     "application_name",
@@ -69,13 +71,32 @@ def boot_django(app: Optional[str] = "") -> None:
     required=True,
 )
 def control(application_name: str, service: str) -> None:
+    services = {
+        "build": {
+            "commands": [subprocess.run],
+            "args": [[["python3", "-m", "build"]]],
+        },
+        "pypi": {
+            "commands": [subprocess.run],
+            "args": [[["twine", "upload", "dist/*"]]],
+        },
+        "startapp": {
+            "commands": [boot_django, call_command],
+            "args": [[], [service, application_name]],
+        },
+        "makemigrations": {
+            "commands": [boot_django, call_command],
+            "args": [[application_name], [service, application_name]],
+        },
+        "migrate": {
+            "commands": [boot_django, call_command],
+            "args": [[application_name], [service, application_name]],
+        },
+        "shell": {
+            "commands": [boot_django, call_command],
+            "args": [[application_name], [service]],
+        }
+    }
 
-    if service == "startapp":
-        boot_django()
-    else:
-        boot_django(application_name)
-
-    if service == "shell":
-        call_command(service)
-    else:
-        call_command(service, application_name)
+    for each_command in zip(services[service]["commands"], services[service]["args"]):
+        each_command[0](*each_command[1])

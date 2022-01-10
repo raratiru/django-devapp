@@ -15,10 +15,11 @@ Options:
   -M       Migrate
   -s       Run Django Shell
   -a       Create Application
+  -b       Build Application
+  -pp      Upload to Pypi
   -n TEXT  The name of the application or DEVAPP_NAME env variable.
            [required]
   --help   Show this message and exit.
-
 ```
 # Example
 ```
