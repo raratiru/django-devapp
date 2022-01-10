@@ -3,6 +3,7 @@ Basic tools to manage a django application outside of a Django project
 
 # Help
 ```
+$ dev --help
 Usage: dev [OPTIONS]
 
 Options:
