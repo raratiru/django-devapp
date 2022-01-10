@@ -56,12 +56,12 @@ def boot_django(app: str = ""):
     "-m",
     "service",
     flag_value="makemigrations",
-    help="Make migrations",
+    help="Make Migrations",
     default=True,
     show_default=True,
 )
 @click.option("-M", "service", flag_value="migrate", help="Migrate")
-@click.option("-s", "service", flag_value="shell", help="Run Django shell")
+@click.option("-s", "service", flag_value="shell", help="Run Django Shell")
 @click.option("-a", "service", flag_value="startapp", help="Create Application")
 @click.option(
     "-n",
