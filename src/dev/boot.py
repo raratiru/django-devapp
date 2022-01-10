@@ -6,6 +6,7 @@ This file sets up and configures Django. It's used by scripts that need to
 execute as if running in a Django server.
 """
 
+import os
 import subprocess
 from pathlib import Path
 from sys import path
@@ -49,20 +50,27 @@ def boot_django(app: Optional[str] = "") -> None:
     django.setup()
 
 
+def run_black(application_name: str) -> None:
+    for root, _, files in os.walk(f"./{application_name}"):
+        for each_file in files:
+            if each_file.endswith("py"):
+                the_path = os.path.join(root, each_file)
+                subprocess.run(["black", the_path])
+
+
 @click.command()
+@click.option("-a", "service", flag_value="startapp", help="Create Application")
 @click.option(
-    "-m",
+    "-b",
     "service",
-    flag_value="makemigrations",
-    help="Make Migrations",
+    flag_value="black",
+    help="Run Black",
     default=True,
     show_default=True,
 )
+@click.option("-bb", "service", flag_value="build", help="Build Application")
+@click.option("-m", "service", flag_value="makemigrations", help="Make Migrations")
 @click.option("-M", "service", flag_value="migrate", help="Migrate")
-@click.option("-s", "service", flag_value="shell", help="Run Django Shell")
-@click.option("-a", "service", flag_value="startapp", help="Create Application")
-@click.option("-b", "service", flag_value="build", help="Build Application")
-@click.option("-pp", "service", flag_value="pypi", help="Upload to Pypi")
 @click.option(
     "-n",
     "application_name",
@@ -70,6 +78,8 @@ def boot_django(app: Optional[str] = "") -> None:
     envvar="DEVAPP_NAME",
     required=True,
 )
+@click.option("-pp", "service", flag_value="pypi", help="Upload to Pypi")
+@click.option("-s", "service", flag_value="shell", help="Run Django Shell")
 def control(application_name: str, service: str) -> None:
     services = {
         "build": {
@@ -95,7 +105,11 @@ def control(application_name: str, service: str) -> None:
         "shell": {
             "commands": [boot_django, call_command],
             "args": [[application_name], [service]],
-        }
+        },
+        "black": {
+            "commands": [run_black],
+            "args": [[application_name]],
+        },
     }
 
     for each_command in zip(services[service]["commands"], services[service]["args"]):

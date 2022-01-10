@@ -1,5 +1,6 @@
-click==8.0.3
+black==21.12b0
 build==0.7.0
-twine==3.7.1
-ipython==7.31.0
+click==8.0.3
 Django==4.0.1
+ipython==7.31.0
+twine==3.7.1

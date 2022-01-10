@@ -11,15 +11,17 @@ $ dev --help
 Usage: dev [OPTIONS]
 
 Options:
-  -m       Make Migrations  [default: makemigrations]
-  -M       Migrate
-  -s       Run Django Shell
   -a       Create Application
-  -b       Build Application
-  -pp      Upload to Pypi
+  -b       Run Black  [default: black]
+  -bb      Build Application
+  -m       Make Migrations
+  -M       Migrate
   -n TEXT  The name of the application or DEVAPP_NAME env variable.
            [required]
+  -pp      Upload to Pypi
+  -s       Run Django Shell
   --help   Show this message and exit.
+
 ```
 # Example
 ```
