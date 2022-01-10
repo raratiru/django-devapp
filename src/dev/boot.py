@@ -7,32 +7,30 @@ execute as if running in a Django server.
 """
 
 import subprocess
-from os import environ
 from pathlib import Path
 from sys import path
+from typing import Optional
 
 import click
 import django
-from click.decorators import help_option
 from django.conf import settings
 from django.core.management import call_command
 
 
-def boot_django(app: str = ""):
+def boot_django(app: Optional[str] = "") -> None:
     BASE_DIR = subprocess.run(["pwd"], capture_output=True, text=True).stdout.strip()
     path.append(BASE_DIR)
 
-    if app:
-        INSTALLED_APPS = (
-            "django.contrib.auth",
-            "django.contrib.contenttypes",
-            app,
+    INSTALLED_APPS = tuple(
+        filter(
+            None,
+            [
+                "django.contrib.auth",
+                "django.contrib.contenttypes",
+                app,
+            ],
         )
-    else:
-        INSTALLED_APPS = (
-            "django.contrib.auth",
-            "django.contrib.contenttypes",
-        )
+    )
 
     settings.configure(
         BASE_DIR=Path(BASE_DIR) / Path("people"),
@@ -69,20 +67,15 @@ def boot_django(app: str = ""):
     help="The name of the application or DEVAPP_NAME env variable.",
     envvar="DEVAPP_NAME",
     required=True,
-    # default=lambda: environ.get("DEVAPP_NAME", ""),
-    # prompt=True,
 )
-def control(application_name, service):
+def control(application_name: str, service: str) -> None:
 
-    if service == "migrate":
-        boot_django(application_name)
-        call_command("migrate")
-    elif service == "shell":
-        boot_django(application_name)
-        call_command("shell")
-    elif service == "startapp":
+    if service == "startapp":
         boot_django()
-        call_command("startapp", application_name)
     else:
         boot_django(application_name)
-        call_command("makemigrations", application_name)
+
+    if service == "shell":
+        call_command(service)
+    else:
+        call_command(service, application_name)
