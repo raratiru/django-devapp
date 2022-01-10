@@ -7,12 +7,14 @@ $ dev --help
 Usage: dev [OPTIONS]
 
 Options:
-  -m       Make migrations  [default: makemigrations]
+  -m       Make Migrations  [default: makemigrations]
   -M       Migrate
-  -s       Run Django shell
+  -s       Run Django Shell
+  -a       Create Application
   -n TEXT  The name of the application or DEVAPP_NAME env variable.
            [required]
   --help   Show this message and exit.
+
 ```
 # Example
 ```
