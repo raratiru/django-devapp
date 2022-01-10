@@ -1,5 +1,7 @@
 # Django DevApp
-Basic tools to manage a django application outside of a Django project
+Basic tools to manage a django application outside of a Django project.
+
+Inspired from ["How to Write an Installable Django App"](https://realpython.com/installable-django-app/#bootstrapping-django-outside-of-a-project).
 
 # Help
 ```
