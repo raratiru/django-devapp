@@ -5,6 +5,15 @@ Inspired from:
 * ["How to Write an Installable Django App"](https://realpython.com/installable-django-app/#bootstrapping-django-outside-of-a-project).
 * ["Packaging Python Projects"](https://packaging.python.org/en/latest/tutorials/packaging-projects/)
 
+# Depends on:
+
+    * black
+    * build
+    * click
+    * django
+    * ipython
+    * twine
+    
 # Help
 ```
 $ dev --help
