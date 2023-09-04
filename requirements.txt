@@ -1,5 +1,5 @@
 black==23.7.0
-build==0.10.0
+build==1.0.0
 click==8.1.6
 Django==4.2.4
 ipython==8.14.0
