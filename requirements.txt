@@ -2,5 +2,5 @@ black==24.3.0
 build==1.0.3
 click==8.1.7
 Django==5.0.1
-ipython==8.20.0
+ipython==8.23.0
 twine==5.0.0
