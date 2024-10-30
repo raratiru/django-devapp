@@ -1,4 +1,4 @@
-black==24.8.0
+black==24.10.0
 build==1.2.2.post1
 click==8.1.7
 ipython==8.29.0
