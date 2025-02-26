@@ -30,7 +30,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Internet :: WWW/HTTP",
 ]
-packages = [{include = "src/dev"}]
+packages = [{include = "dev", from = "src"}]
 
 [project.scripts]
 dev = "dev.boot:control"
